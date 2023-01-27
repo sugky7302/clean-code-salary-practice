@@ -1,5 +1,5 @@
 export class PayTest {
     constructor(){
-        console.log(1);
+        console.log("PayTest constructor");
     }
 }
