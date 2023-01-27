@@ -1,0 +1,41 @@
+@startuml payment
+title Calculate Employee's Pay
+class PaydayTransaction
+class Employee
+class PaymentClassification
+
+PaydayTransaction "in: Date" -> Employee: 1. Pay
+Employee "in: Date" --> "out: Pay" PaymentClassification: 1.1 CalculatePay
+@enduml
+
+@startuml hourlypayment
+title Calculate Hourly Employee's Pay
+actor user as UU
+participant HourlyClassification as h
+participant TimeCard as t
+UU -> h: CalculatePay
+activate h
+group for each time card
+note left: date
+    h -> t: GetHours
+    t --> h: hours
+    h -> t: GetDate
+    t --> h: date
+end
+@enduml
+
+@startuml commissionpayment
+title Calculate Commissioned Employee's Pay
+actor user as UU
+participant CommissionedClassification as h
+participant SalesReceipt as t
+UU -> h: CalculatePay
+activate h
+note left: date
+group for each sale receipt
+    h -> t: GetAmount
+    t --> h: amount
+    h -> t: GetDate
+    t --> h: date
+end
+@enduml

@@ -93,5 +93,11 @@ ServiceCharge <工會成員編號> <費用>
 Payday <date>
 ```
 
-## 核心模型類別圖
+## UML圖
+### 核心模型
 @import "uml-output/main/main.png"
+
+### 薪水支付
+@import "uml-output/payment/payment.png"
+@import "uml-output/payment/hourlypayment.png"
+@import "uml-output/payment/commissionpayment.png"
