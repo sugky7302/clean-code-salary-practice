@@ -1,0 +1,9 @@
+{
+	"scripts": {
+		"start:watch": "tsc -w",
+		"start:run": "nodemon build/main.js"
+	},
+	"dependencies": {
+		"nodemon": "^2.0.20"
+	}
+}
