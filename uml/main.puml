@@ -1,16 +1,53 @@
 @startuml main
-(*)-->[with name & password]"login"
+' 支付方式
+interface PaymentMethod
+class HoldMethod
+class DirectMethod {
+    - bank
+    - account
+}
+class MailMethod {
+    - address
+}
+PaymentMethod <|-- HoldMethod
+PaymentMethod <|-- DirectMethod
+PaymentMethod <|-- MailMethod
 
-if "user exist" then
---> [token]"edit /show user info/reset pw"
--right-> (*)
+' 薪水類別
+abstract class PaymentClassification
+class HourlyClassification {
+    - hourlyRate
+}
+class SalariedClassification {
+    - salary
+}
+class CommissionedClassification {
+    - salary
+    - commissionRate
+}
+class TimeCard
+class SalesReceipt
+PaymentClassification <|-- HourlyClassification
+PaymentClassification <|-- SalariedClassification
+PaymentClassification <|-- CommissionedClassification
+HourlyClassification --> "0..*" TimeCard
+CommissionedClassification --> "0..*" SalesReceipt
 
-else
--> [token]"logout"
--right-> (*)
+' 工會類別
+interface Affiliation
+class NoAffiliation
+class UnionAffiliation {
+    - memberId
+    - dues
+}
+class ServiceCharge
+UnionAffiliation --> "0..*" ServiceCharge
+Affiliation <|-- NoAffiliation
+Affiliation <|-- UnionAffiliation
 
-else
--> [token]"add task"
--> [token]"update/delete task"
--->(*)
+' 主要的類別
+class Employee
+Employee -down-> PaymentClassification
+Employee -left-> PaymentMethod
+Employee -right-> Affiliation
 @enduml

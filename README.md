@@ -46,9 +46,9 @@ TimeCard <EmpID> <date> <hours>
 ```
 - 登記銷售單據
 ```
-使用 SaleReceipt 事務建立一條新的銷售單據紀錄，並且與此紀錄和對應的員工紀錄關聯起來。
+使用 SalesReceipt 事務建立一條新的銷售單據紀錄，並且與此紀錄和對應的員工紀錄關聯起來。
 
-SaleReceipt <EmpID> <date> <銷售額>
+SalesReceipt <EmpID> <date> <銷售額>
 
 ---異常處理---
 (1) 所選擇的員工不是應該支付佣金的：列印錯誤訊息，但不進行處理。
@@ -94,4 +94,4 @@ Payday <date>
 ```
 
 ## 核心模型類別圖
-@import "out/a/a.png"
+@import "uml-output/main/main.png"

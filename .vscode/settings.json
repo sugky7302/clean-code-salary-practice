@@ -1,4 +1,4 @@
 {
     "plantuml.diagramsRoot": "uml",
-    "plantuml.exportOutDir": "uml"
+    "plantuml.exportOutDir": "uml-output"
 }
