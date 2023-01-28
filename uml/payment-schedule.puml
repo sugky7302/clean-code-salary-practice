@@ -1,0 +1,21 @@
+@startuml paymentschedule
+class Employee
+interface PaymentSchedule
+class WeeklySchedule
+class MonthlySchedule
+class BiweeklySchedule
+Employee <- PaymentSchedule: itsSchedule
+PaymentSchedule <|-- WeeklySchedule
+PaymentSchedule <|-- MonthlySchedule
+PaymentSchedule <|-- BiweeklySchedule
+@enduml
+
+@startuml schedule
+title Payment Schedule
+actor user as UU
+participant Employee as e
+participant PaymentSchedule as p
+UU -> e: isPayday(date)
+activate e
+e -> p: isPayday(date)
+@enduml
