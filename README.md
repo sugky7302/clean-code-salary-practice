@@ -103,6 +103,13 @@ Payday <date>
 @import "uml-output/payment/commissionpayment.png"
 
 ### 薪水支付時間表
-若支付時間表和支付策略有關聯，會出現任一側改變時，另一側要重新測試，確保沒有問題，這違反了單一職責原則(SRP)及開放封閉原則(OCP)。因此，我把它提到 Employee 類別裏面，只暴露 isPayday() 去檢測是不是交付日。
+若支付時間表和支付策略有關聯，會出現任一側改變時，另一側要重新測試的問題，這違反了單一職責原則(SRP)及開放封閉原則(OCP)。因此，我把它提到 Employee 類別裏面，只暴露 isPayday() 去檢測是不是交付日。
 @import "uml-output/payment-schedule/paymentschedule.png"
 @import "uml-output/payment-schedule/schedule.png"
+
+### 事務介面
+@import "uml-output/transaction/transaction.png"
+
+### 新增員工事務
+我們透過事務把支付時間表和支付種類關聯起來。這麼設計的原因是因為事務是人為設計的、附加的，我們可以輕易更改，保證未來我們在保持核心模型不變的情況下更改關聯關係。
+@import "uml-output/transaction/AddEmployeeTransaction.png"

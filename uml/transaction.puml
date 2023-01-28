@@ -1,0 +1,54 @@
+@startuml transaction
+class TransactionParser
+interface Transaction {
+    + execute()
+}
+TransactionParser -> Transaction: <<create>>
+@enduml
+
+@startuml AddEmployeeTransaction
+title Add Employee
+interface Transaction
+class AddEmployeeTransaction {
+    - empid
+    - itsAddress
+    - itsName
+}
+class Employee {
+    + setSchedule()
+    +setClassification()
+    +setMethod()
+}
+class PayrollDatabase
+class HoldMethod
+class AddHourlyEmployee {
+    - hourlyRate
+}
+class AddSalariedEmployee {
+    - salary
+}
+class AddCommissionedEmployee {
+    - salary
+    - commissionRate
+}
+class WeeklySchedule
+class BiweeklySchedule
+class MonthlySchedule
+class HourlyClassification
+class SalariedClassification
+class CommissionedClassification
+
+Transaction <|-- AddEmployeeTransaction
+AddEmployeeTransaction -> Employee: <<creates>>
+AddEmployeeTransaction -> PayrollDatabase: <<global>>
+AddEmployeeTransaction -> HoldMethod: <<creates>>
+AddEmployeeTransaction <|-- AddHourlyEmployee
+AddEmployeeTransaction <|-- AddSalariedEmployee
+AddEmployeeTransaction <|-- AddCommissionedEmployee
+AddHourlyEmployee --> HourlyClassification: <<creates>>
+AddHourlyEmployee --> WeeklySchedule: <<creates>>
+AddSalariedEmployee --> SalariedClassification: <<creates>>
+AddSalariedEmployee --> MonthlySchedule: <<creates>>
+AddCommissionedEmployee --> CommissionedClassification: <<creates>>
+AddCommissionedEmployee --> BiweeklySchedule: <<creates>>
+@enduml
