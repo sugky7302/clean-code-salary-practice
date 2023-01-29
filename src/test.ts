@@ -7,7 +7,7 @@ import { AddSalariedEmployee } from "./transaction/add-salaried-employee";
 
 export class PayTest {
     constructor(){
-        console.log("PayTest constructor");
+        this.TestAddSalariedEmployee();
     }
 
     public TestAddSalariedEmployee() {
@@ -16,7 +16,7 @@ export class PayTest {
         t.execute();
 
         const e = PayrollDatabase.getEmployee(empId);
-        Assert.areEqual("Bob", e.getName());
+        Assert.areEqual("Bob", e.name);
 
         const pc = e.classification;
         Assert.isTrue(pc instanceof SalariedClassification);

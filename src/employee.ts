@@ -2,10 +2,6 @@ import { PaymentClassification } from "./classification/classification";
 import { PaymentMethod } from "./method/method";
 import { PaymentSchedule } from "./schedule/schedule";
 
-export interface Employee {
-    _name: string;
-    classification: PaymentClassification;
-    schedule: PaymentSchedule;
-    method: PaymentMethod;
-    getName(): string;
+export class Employee {
+    constructor(public readonly name: string, public classification: PaymentClassification, public schedule: PaymentSchedule, public method: PaymentMethod) {}
 }
