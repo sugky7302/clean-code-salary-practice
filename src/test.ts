@@ -1,5 +1,5 @@
 import { Assert } from "./assert";
-import { SalariedClassification } from "./classification/salaried-classification";
+import { SalariedClassification } from "./classification/salaried-classiflication";
 import { HoldMethod } from "./method/hold-method";
 import { PayrollDatabase } from "./payrolldatabase";
 import { MonthlySchedule } from "./schedule/month-schedule";

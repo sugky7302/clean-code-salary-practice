@@ -1,19 +1,19 @@
 import { PaymentClassification } from "../classification/classification";
-import { SalariedClassification } from "../classification/salaried-classiflication";
-import { MonthlySchedule } from "../schedule/month-schedule";
+import { HourlyClassification } from "../classification/hourly-classiflication";
 import { PaymentSchedule } from "../schedule/schedule";
+import { WeeklySchedule } from "../schedule/weekly-schedule";
 import { AddEmployeeTransaction } from "./add-employee-transaction";
 
-export class AddSalariedEmployee extends AddEmployeeTransaction {
+export class AddHourlyEmployee extends AddEmployeeTransaction {
     private itsSalary: number;
     constructor(empId: number, name: string, address: string, salary: number) {
         super(empId, name, address);
         this.itsSalary = salary;
     }
     public makeClassification(): PaymentClassification {
-        return new SalariedClassification(this.itsSalary);
+        return new HourlyClassification(this.itsSalary);
     }
     public makeSchedule(): PaymentSchedule {
-        return new MonthlySchedule();
+        return new WeeklySchedule();
     }
 }
