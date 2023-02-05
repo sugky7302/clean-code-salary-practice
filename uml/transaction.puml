@@ -52,3 +52,29 @@ AddSalariedEmployee --> MonthlySchedule: <<creates>>
 AddCommissionedEmployee --> CommissionedClassification: <<creates>>
 AddCommissionedEmployee --> BiweeklySchedule: <<creates>>
 @enduml
+
+@startuml AddEmployeeProgress
+title Add Employee Progress
+actor user
+user -> AddEmployeeTransaction: Execute
+activate AddEmployeeTransaction
+AddEmployeeTransaction -> Employee: name, address
+AddEmployeeTransaction -> AddEmployeeTransaction: GetClassiflication
+activate AddEmployeeTransaction
+deactivate AddEmployeeTransaction
+AddEmployeeTransaction -> Employee: SetClassification
+activate Employee
+deactivate Employee
+AddEmployeeTransaction -> AddEmployeeTransaction: GetSchedule
+activate AddEmployeeTransaction
+deactivate AddEmployeeTransaction
+AddEmployeeTransaction -> Employee: SetSchedule
+activate Employee
+deactivate Employee
+AddEmployeeTransaction -> HoldMethod
+AddEmployeeTransaction -> Employee: SetMethod
+AddEmployeeTransaction -> PayrollDatabase: AddEmployee(employee)
+deactivate AddEmployeeTransaction
+activate PayrollDatabase
+deactivate PayrollDatabase
+@enduml

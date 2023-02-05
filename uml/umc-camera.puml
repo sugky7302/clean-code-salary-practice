@@ -1,0 +1,38 @@
+@startuml main
+actor user
+cloud Frontend
+cloud Backend
+cloud DatabaseMigrator
+database PostgreSQL
+database OriginalSQL
+
+user <- Frontend: :80
+Frontend -> Backend: :3003
+Backend -> PostgreSQL: :5432
+DatabaseMigrator -left-> OriginalSQL: Load & Filter Data
+DatabaseMigrator -up-> PostgreSQL: Output Sorted Data
+DatabaseMigrator --> DatabaseMigrator: Check whether data are existed periodically
+@enduml
+
+@startuml PostgreSQL
+actor user
+database Database
+cloud DatabaseMigrator
+DatabaseMigrator -left-> Database: Output Sorted Data
+user <- Database
+@enduml
+
+@startuml backend
+actor user
+participant Backend
+participant PostgreSQL
+participant folder
+
+user -> Backend: request
+activate Backend
+Backend -> PostgreSQL: query
+PostgreSQL -> Backend: pathes
+Backend -> folder: load by remote disk
+folder -> Backend: photos or videos
+Backend -> user: response
+@enduml
