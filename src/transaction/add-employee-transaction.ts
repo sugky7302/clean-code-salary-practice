@@ -7,8 +7,8 @@ import { Transaction } from "./transaction";
 
 export abstract class AddEmployeeTransaction implements Transaction {
     constructor(protected readonly empid: number,
-        protected readonly itsAddress: string,
-        protected readonly itsName: string) {
+        protected readonly itsName: string,
+        protected readonly itsAddress: string) {
     }
 
     protected abstract makeClassification(): PaymentClassification;

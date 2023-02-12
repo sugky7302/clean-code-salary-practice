@@ -8,6 +8,7 @@ import { AddCommissionedEmployee } from "./transaction/add-commissioned-employee
 import { AddHourlyEmployee } from "./transaction/add-hourly-employee";
 import { AddSalariedEmployee } from "./transaction/add-salaried-employee";
 import { DeleteEmployeeTransaction } from "./transaction/delete-employee";
+import { TimeCardTransaction } from "./transaction/timecard-transaction";
 
 export class PayTest {
     constructor(){

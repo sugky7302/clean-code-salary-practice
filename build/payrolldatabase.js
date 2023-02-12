@@ -9,5 +9,8 @@ class PayrollDatabase {
     static getEmployee(id) {
         return PayrollDatabase.employees[id];
     }
+    static deleteEmployee(id) {
+        delete PayrollDatabase.employees[id];
+    }
 }
 exports.PayrollDatabase = PayrollDatabase;
