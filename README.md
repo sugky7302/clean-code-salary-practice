@@ -118,3 +118,7 @@ Payday <date>
 ### 刪除員工事務
 @import "uml-output/transaction/DeleteEmployeeTransaction.png"
 @import "uml-output/transaction/DeleteEmployeeProgress.png"
+
+## 登記出缺勤卡事務
+@import "uml-output/transaction/TimeCardTransaction.png"
+@import "uml-output/transaction/TimeCardProgress.png"

@@ -102,3 +102,46 @@ activate PayrollDatabase
 deactivate PayrollDatabase
 deactivate DeleteEmployeeTransaction
 @enduml
+
+@startuml TimeCardTransaction
+interface Transaction
+class TimeCardTransaction {
+    - date
+    - hours
+    - empId
+}
+class PayrollDatabase
+class TimeCard {
+    - date
+    - hours
+}
+class Employee
+class HourlyClassification
+Transaction <|-- TimeCardTransaction
+TimeCardTransaction -> PayrollDatabase
+TimeCardTransaction --> TimeCard
+TimeCardTransaction --> Employee
+TimeCardTransaction --> HourlyClassification
+Employee --> PaymentClassification
+HourlyClassification --|> PaymentClassification
+@enduml
+
+@startuml TimeCardProgress
+actor user
+participant TimeCardTransaction
+participant PayrollDatabase
+participant Employee
+participant TimeCard
+participant HourlyClassification
+user -> TimeCardTransaction: Execute
+activate TimeCardTransaction
+TimeCardTransaction -> PayrollDatabase: GetEmployee(empId): Employee
+activate PayrollDatabase
+deactivate PayrollDatabase
+TimeCardTransaction -> Employee: GetPaymentClassification(): PaymentClassification
+activate Employee
+Employee -> HourlyClassification: <<create>>
+deactivate Employee
+TimeCardTransaction -> TimeCard: date, hours
+TimeCardTransaction -> HourlyClassification: AddTimeCard(timeCard)
+@enduml
