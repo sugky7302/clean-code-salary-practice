@@ -15,11 +15,11 @@ class Assert {
             throw new Error(message ?? 'Two conditions are not equal.');
     }
     static isNull(a, message) {
-        if (a !== null)
+        if (a !== null && a !== undefined)
             throw new Error(message ?? 'Condition is not null.');
     }
     static isNotNull(a, message) {
-        if (a === null)
+        if (a === null || a === undefined)
             throw new Error(message ?? 'Condition is null.');
     }
 }

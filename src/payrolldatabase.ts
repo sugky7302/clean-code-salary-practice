@@ -1,17 +1,17 @@
 import { Employee } from "./employee";
 
 export class PayrollDatabase {
-    private static employees: {[key: number]: Employee} = {};
+    private static employees = new Map<number, Employee>();
 
     public static addEmployee(id: number, employee: Employee) {
-        PayrollDatabase.employees[id] = employee;
+        PayrollDatabase.employees.set(id, employee);
     }
 
-    public static getEmployee(id: number): Employee {
-        return PayrollDatabase.employees[id];
+    public static getEmployee(id: number): Employee | undefined {
+        return PayrollDatabase.employees.get(id);
     }
 
     public static deleteEmployee(id: number) {
-        delete PayrollDatabase.employees[id];
+        PayrollDatabase.employees.delete(id);
     }
 }

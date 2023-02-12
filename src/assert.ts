@@ -12,10 +12,10 @@ export class Assert {
     }
 
     static isNull<T>(a: T, message?: string) {
-        if (a !== null) throw new Error(message ?? 'Condition is not null.');
+        if (a !== null && a !== undefined) throw new Error(message ?? 'Condition is not null.');
     }
 
     static isNotNull<T>(a: T, message?: string) {
-        if (a === null) throw new Error(message ?? 'Condition is null.');
+        if (a === null || a === undefined) throw new Error(message ?? 'Condition is null.');
     }
 }
