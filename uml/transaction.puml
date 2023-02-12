@@ -145,3 +145,49 @@ deactivate Employee
 TimeCardTransaction -> TimeCard: date, hours
 TimeCardTransaction -> HourlyClassification: AddTimeCard(timeCard)
 @enduml
+
+@startuml SalesReceiptTransaction
+interface Transaction
+class SalesReceiptTransaction {
+    - date
+    - amount
+    - empId
+}
+class PayrollDatabase
+class Employee
+class SalesReceipt {
+    - date
+    - amount
+}
+interface PaymentClassification
+class CommissionedClassification
+
+Transaction <|-- SalesReceiptTransaction
+SalesReceiptTransaction -left-> PayrollDatabase
+SalesReceiptTransaction --> SalesReceipt
+SalesReceiptTransaction --> Employee
+SalesReceiptTransaction --> CommissionedClassification
+SalesReceiptTransaction -right-> PaymentClassification
+PaymentClassification <|-- CommissionedClassification
+@enduml
+
+@startuml SalesReceiptProgress
+actor user
+participant SalesReceiptTransaction
+participant PayrollDatabase
+participant Employee
+participant CommissionedClassification
+participant SalesReceipt
+
+user -> SalesReceiptTransaction: Execute
+activate SalesReceiptTransaction
+SalesReceiptTransaction -> PayrollDatabase: GetEmployee(empId): Employee
+activate PayrollDatabase
+deactivate PayrollDatabase
+SalesReceiptTransaction -> Employee: GetPaymentClassification(): PaymentClassification
+activate Employee
+Employee -> CommissionedClassification: <<create>>
+deactivate Employee
+SalesReceiptTransaction -> SalesReceipt: date, amount
+SalesReceiptTransaction -> CommissionedClassification: AddSalesReceipt(salesReceipt)
+@enduml

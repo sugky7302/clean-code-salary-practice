@@ -122,3 +122,9 @@ Payday <date>
 ## 登記出缺勤卡事務
 @import "uml-output/transaction/TimeCardTransaction.png"
 @import "uml-output/transaction/TimeCardProgress.png"
+
+### 登記銷售單據事務
+@import "uml-output/transaction/SalesReceiptTransaction.png"
+@import "uml-output/transaction/SalesReceiptProgress.png"
+
+### 登記服務費用事務
