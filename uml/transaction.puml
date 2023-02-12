@@ -78,3 +78,27 @@ deactivate AddEmployeeTransaction
 activate PayrollDatabase
 deactivate PayrollDatabase
 @enduml
+
+@startuml DeleteEmployeeTransaction
+title Delete Employee
+interface Transaction
+class DeleteEmployeeTransaction {
+    - empid
+}
+class PayrollDatabase
+Transaction <|-- DeleteEmployeeTransaction
+DeleteEmployeeTransaction -> PayrollDatabase
+
+@enduml
+
+@startuml DeleteEmployeeProgress
+actor user
+participant DeleteEmployeeTransaction
+participant PayrollDatabase
+user -> DeleteEmployeeTransaction: Execute
+activate DeleteEmployeeTransaction
+DeleteEmployeeTransaction -> PayrollDatabase: DeleteEmployee(empid)
+activate PayrollDatabase
+deactivate PayrollDatabase
+deactivate DeleteEmployeeTransaction
+@enduml

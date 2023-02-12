@@ -6,12 +6,14 @@ import { AddEmployeeTransaction } from "./add-employee-transaction";
 
 export class AddCommissionedEmployee extends AddEmployeeTransaction {
     private itsSalary: number;
-    constructor(empId: number, name: string, address: string, salary: number) {
+    private itsCommissionRate: number;
+    constructor(empId: number, name: string, address: string, salary: number, commissionRate: number) {
         super(empId, name, address);
         this.itsSalary = salary;
+        this.itsCommissionRate = commissionRate;
     }
     public makeClassification(): PaymentClassification {
-        return new CommissionedClassification(this.itsSalary);
+        return new CommissionedClassification(this.itsSalary, this.itsCommissionRate);
     }
     public makeSchedule(): PaymentSchedule {
         return new BiweeklySchedule();

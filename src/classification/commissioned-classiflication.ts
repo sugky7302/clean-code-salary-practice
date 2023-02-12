@@ -2,14 +2,14 @@ import { Paycheck } from "../paycheck";
 import { PaymentClassification } from "./classification";
 
 export class CommissionedClassification implements PaymentClassification {
-    private _salary: number;
-
-    constructor(salary: number) {
-        this._salary = salary;
-    }
+    constructor(private _salary: number, private _commissionRate: number) {}
 
     public get salary(): number {
         return this._salary;
+    }
+
+    public get commissionRate(): number {
+        return this._commissionRate;
     }
 
     public calculatePay(pc: Paycheck): number {

@@ -114,3 +114,7 @@ Payday <date>
 我們透過事務把支付時間表和支付種類關聯起來。這麼設計的原因是因為事務是人為設計的、附加的，我們可以輕易更改，保證未來我們在保持核心模型不變的情況下更改關聯關係。
 @import "uml-output/transaction/AddEmployeeTransaction.png"
 @import "uml-output/transaction/AddEmployeeProgress.png"
+
+### 刪除員工事務
+@import "uml-output/transaction/DeleteEmployeeTransaction.png"
+@import "uml-output/transaction/DeleteEmployeeProgress.png"

@@ -10,4 +10,8 @@ export class PayrollDatabase {
     public static getEmployee(id: number): Employee {
         return PayrollDatabase.employees[id];
     }
+
+    public static deleteEmployee(id: number) {
+        delete PayrollDatabase.employees[id];
+    }
 }

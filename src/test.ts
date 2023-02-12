@@ -3,7 +3,9 @@ import { SalariedClassification } from "./classification/salaried-classiflicatio
 import { HoldMethod } from "./method/hold-method";
 import { PayrollDatabase } from "./payrolldatabase";
 import { MonthlySchedule } from "./schedule/month-schedule";
+import { AddCommissionedEmployee } from "./transaction/add-commissioned-employee";
 import { AddSalariedEmployee } from "./transaction/add-salaried-employee";
+import { DeleteEmployeeTransaction } from "./transaction/delete-employee";
 
 export class PayTest {
     constructor(){
@@ -28,5 +30,24 @@ export class PayTest {
 
         const pm = e.method;
         Assert.isTrue(pm instanceof HoldMethod);
+    }
+
+    /**
+     * 先新增一個員工，再刪除該員工
+     * 測試是否刪除成功
+     */
+    public TestDeleteEmployee() {
+        const empId = 4;
+        const t = new AddCommissionedEmployee(empId, "Bill", "Home", 2500, 3.2);
+        t.execute();
+
+        let e = PayrollDatabase.getEmployee(empId);
+        Assert.isNotNull(e);
+
+        const dt = new DeleteEmployeeTransaction(empId);
+        dt.execute();
+    
+        e = PayrollDatabase.getEmployee(empId);
+        Assert.isNull(e);
     }
 }
