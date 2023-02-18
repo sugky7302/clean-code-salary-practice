@@ -8,6 +8,7 @@ class Employee {
     classification;
     schedule;
     method;
+    affiliation;
     constructor(empid, name, address, classification, schedule, method) {
         this.empid = empid;
         this.name = name;

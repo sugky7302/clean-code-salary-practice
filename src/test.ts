@@ -1,7 +1,9 @@
+import { UnionAffiliation } from "./affiliation/union-affiliation";
 import { Assert } from "./assert";
 import { CommissionedClassification } from "./classification/commissioned-classiflication";
 import { HourlyClassification } from "./classification/hourly-classiflication";
 import { SalariedClassification } from "./classification/salaried-classiflication";
+import { Employee } from "./employee";
 import { HoldMethod } from "./method/hold-method";
 import { PayrollDatabase } from "./payrolldatabase";
 import { MonthlySchedule } from "./schedule/month-schedule";
@@ -10,6 +12,7 @@ import { AddHourlyEmployee } from "./transaction/add-hourly-employee";
 import { AddSalariedEmployee } from "./transaction/add-salaried-employee";
 import { DeleteEmployeeTransaction } from "./transaction/delete-employee";
 import { SalesReceiptTransaction } from "./transaction/sales-receipt-transaction";
+import { ServiceChargeTransaction } from "./transaction/service-charge-transaction";
 import { TimeCardTransaction } from "./transaction/timecard-transaction";
 
 export class PayTest {
@@ -104,13 +107,13 @@ export class PayTest {
 
     public TestAddServiceCharge() {
         const empId = 8;
-        const t = AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        const t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
         t.execute();
 
-        const e = PayrollDatabase.getEmployee(empId);
+        const e = PayrollDatabase.getEmployee(empId) as Employee;
         Assert.isNotNull(e);
 
-        af = new UnionAffiliation();
+        const af = new UnionAffiliation();
         e.affiliation = af;
 
         const memberId = 86;
@@ -121,6 +124,6 @@ export class PayTest {
 
         const sc = af.getServiceCharge(new Date(2005, 8, 8));
         Assert.isNotNull(sc);
-        Assert.areEqual(12.95, sc?.amount);
+        Assert.areEqual(12.95, sc?.charge);
     }
 }

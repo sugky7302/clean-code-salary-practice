@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PayTest = void 0;
+const union_affiliation_1 = require("./affiliation/union-affiliation");
 const assert_1 = require("./assert");
 const commissioned_classiflication_1 = require("./classification/commissioned-classiflication");
 const hourly_classiflication_1 = require("./classification/hourly-classiflication");
@@ -13,6 +14,7 @@ const add_hourly_employee_1 = require("./transaction/add-hourly-employee");
 const add_salaried_employee_1 = require("./transaction/add-salaried-employee");
 const delete_employee_1 = require("./transaction/delete-employee");
 const sales_receipt_transaction_1 = require("./transaction/sales-receipt-transaction");
+const service_charge_transaction_1 = require("./transaction/service-charge-transaction");
 const timecard_transaction_1 = require("./transaction/timecard-transaction");
 class PayTest {
     constructor() {
@@ -20,6 +22,7 @@ class PayTest {
         this.TestDeleteEmployee();
         this.TestTimeCardTransaction();
         this.TestSalesReceiptTransaction();
+        this.TestAddServiceCharge();
     }
     TestAddSalariedEmployee() {
         const empId = 1;
@@ -82,6 +85,22 @@ class PayTest {
         const sr = cc.getSalesReceipt(new Date(2005, 7, 31));
         assert_1.Assert.isNotNull(sr);
         assert_1.Assert.areEqual(1200, sr?.amount);
+    }
+    TestAddServiceCharge() {
+        const empId = 8;
+        const t = new add_hourly_employee_1.AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+        const e = payrolldatabase_1.PayrollDatabase.getEmployee(empId);
+        assert_1.Assert.isNotNull(e);
+        const af = new union_affiliation_1.UnionAffiliation();
+        e.affiliation = af;
+        const memberId = 86;
+        payrolldatabase_1.PayrollDatabase.addUnionMember(memberId, e);
+        const sct = new service_charge_transaction_1.ServiceChargeTransaction(memberId, new Date(2005, 8, 8), 12.95);
+        sct.execute();
+        const sc = af.getServiceCharge(new Date(2005, 8, 8));
+        assert_1.Assert.isNotNull(sc);
+        assert_1.Assert.areEqual(12.95, sc?.charge);
     }
 }
 exports.PayTest = PayTest;
