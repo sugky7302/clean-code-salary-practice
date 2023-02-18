@@ -128,3 +128,6 @@ Payday <date>
 @import "uml-output/transaction/SalesReceiptProgress.png"
 
 ### 登記服務費用事務
+核心模型的 Employee 容許從屬多個工會，但是事務模型無法辨識從屬關係，而且會登記服務費用表示該員工一定隸屬於某個工會，因此我在 Employee 中的 Affiliation 搜尋 UnionAffiliation，並把 ServiceCharge 加進去。
+@import "uml-output/transaction/ServiceChargeTransaction.png"
+@import "uml-output/transaction/ServiceChargeProgress.png"

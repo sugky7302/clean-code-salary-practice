@@ -191,3 +191,51 @@ deactivate Employee
 SalesReceiptTransaction -> SalesReceipt: date, amount
 SalesReceiptTransaction -> CommissionedClassification: AddSalesReceipt(salesReceipt)
 @enduml
+
+@startuml ServiceChargeTransaction
+interface Transaction
+class ServiceChargeTransaction {
+    - date
+    - amount
+    - memberId
+}
+class PayrollDatabase
+class Employee
+class ServiceCharge {
+    - date
+    - amount
+}
+interface Affiliation
+class UnionAffiliation
+
+Transaction <|-- ServiceChargeTransaction
+ServiceChargeTransaction -left-> PayrollDatabase
+ServiceChargeTransaction --> ServiceCharge
+ServiceChargeTransaction --> Employee
+ServiceChargeTransaction --> UnionAffiliation
+ServiceChargeTransaction -right-> Affiliation
+Affiliation <|-- UnionAffiliation
+@enduml
+
+@startuml ServiceChargeProgress
+actor user
+participant ServiceChargeTransaction
+participant PayrollDatabase
+participant Employee
+participant UnionAffiliation
+participant ServiceCharge
+
+user -> ServiceChargeTransaction: Execute
+activate ServiceChargeTransaction
+ServiceChargeTransaction -> PayrollDatabase: GetUnionMember(memberId): Employee
+activate PayrollDatabase
+deactivate PayrollDatabase
+ServiceChargeTransaction -> Employee: GetAffiliation(): Affiliation
+ServiceChargeTransaction -> ServiceChargeTransaction: Search through affiliation to find an affiliation that can be downcast to a UnionAffiliation.
+ServiceChargeTransaction -> Employee
+activate Employee
+Employee -> UnionAffiliation: <<create>>
+deactivate Employee
+ServiceChargeTransaction -> ServiceCharge: date, amount
+ServiceChargeTransaction -> UnionAffiliation: AddServiceCharge(serviceCharge)
+@enduml
