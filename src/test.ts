@@ -18,6 +18,7 @@ export class PayTest {
         this.TestDeleteEmployee();
         this.TestTimeCardTransaction();
         this.TestSalesReceiptTransaction();
+        this.TestAddServiceCharge();
     }
 
     public TestAddSalariedEmployee() {
@@ -99,5 +100,27 @@ export class PayTest {
         const sr = cc.getSalesReceipt(new Date(2005, 7, 31));
         Assert.isNotNull(sr);
         Assert.areEqual(1200, sr?.amount);
+    }
+
+    public TestAddServiceCharge() {
+        const empId = 8;
+        const t = AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+
+        const e = PayrollDatabase.getEmployee(empId);
+        Assert.isNotNull(e);
+
+        af = new UnionAffiliation();
+        e.affiliation = af;
+
+        const memberId = 86;
+        PayrollDatabase.addUnionMember(memberId, e);
+        
+        const sct = new ServiceChargeTransaction(memberId, new Date(2005, 8, 8), 12.95);
+        sct.execute();
+
+        const sc = af.getServiceCharge(new Date(2005, 8, 8));
+        Assert.isNotNull(sc);
+        Assert.areEqual(12.95, sc?.amount);
     }
 }
