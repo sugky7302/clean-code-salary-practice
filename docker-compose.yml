@@ -1,9 +1,7 @@
 version: "3.8"
 services:
-  main:
-    container_name: clean-code.main
-    build:
-      context: .
+  app:
+    build: .
     volumes:
       - ./src:/src/src
       - ./uml:/src/uml

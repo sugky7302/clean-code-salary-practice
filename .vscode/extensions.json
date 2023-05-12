@@ -1,6 +1,11 @@
 {
     "recommendations": [
         "jebbs.plantuml",
-        "shd101wyy.markdown-preview-enhanced"
+        "shd101wyy.markdown-preview-enhanced",
+        "mhutchie.git-graph",
+        "github.copilot",
+        "gruntfuggly.todo-tree",
+        "eamodio.gitlens",
+        "oderwat.indent-rainbow"
     ]
 }
