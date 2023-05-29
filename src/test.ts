@@ -7,9 +7,12 @@ import { Employee } from "./employee";
 import { HoldMethod } from "./method/hold-method";
 import { PayrollDatabase } from "./payrolldatabase";
 import { MonthlySchedule } from "./schedule/month-schedule";
+import { WeeklySchedule } from "./schedule/weekly-schedule";
 import { AddCommissionedEmployee } from "./transaction/add-commissioned-employee";
 import { AddHourlyEmployee } from "./transaction/add-hourly-employee";
 import { AddSalariedEmployee } from "./transaction/add-salaried-employee";
+import { ChangeHourlyTransaction } from "./transaction/change-hourly-transaction";
+import { ChangeNameTransaction } from "./transaction/change-name-transaction";
 import { DeleteEmployeeTransaction } from "./transaction/delete-employee";
 import { SalesReceiptTransaction } from "./transaction/sales-receipt-transaction";
 import { ServiceChargeTransaction } from "./transaction/service-charge-transaction";
@@ -22,6 +25,8 @@ export class PayTest {
         this.TestTimeCardTransaction();
         this.TestSalesReceiptTransaction();
         this.TestAddServiceCharge();
+        this.TestChangeNameTransaction();
+        this.TestChangeHourlyTransaction();
     }
 
     public TestAddSalariedEmployee() {
@@ -125,5 +130,33 @@ export class PayTest {
         const sc = af.getServiceCharge(new Date(2005, 8, 8));
         Assert.isNotNull(sc);
         Assert.areEqual(12.95, sc?.charge);
+    }
+
+    public TestChangeNameTransaction() {
+        const empId = 2;
+        const t = new AddHourlyEmployee(empId, "Bill", "Home", 15.25);
+        t.execute();
+        const cnt = new ChangeNameTransaction(empId, "Bob");
+        cnt.execute();
+        const e = PayrollDatabase.getEmployee(empId);
+        Assert.isNotNull(e);
+        Assert.areEqual("Bob", e?.name);
+    }
+
+    public TestChangeHourlyTransaction() {
+        const empId = 3;
+        const t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        t.execute();
+        const cht = new ChangeHourlyTransaction(empId, 27.52);
+        cht.execute();
+        const e = PayrollDatabase.getEmployee(empId);
+        Assert.isNotNull(e);
+        const pc = e?.classification;
+        Assert.isNotNull(pc);
+        Assert.isTrue(pc instanceof HourlyClassification);
+        const hc = pc as HourlyClassification;
+        Assert.areEqual(27.52, hc.salary);
+        const ps = e?.schedule;
+        Assert.isTrue(ps instanceof WeeklySchedule);
     }
 }

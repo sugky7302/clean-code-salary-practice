@@ -301,3 +301,17 @@ deactivate PayrollDatabase
 ChangeEmployeeTransaction -> ChangeEmployeeTransaction: Change
 deactivate ChangeEmployeeTransaction
 @enduml
+
+@startuml ChangeClassificationTransaction
+actor user
+participant ChangeClassificationTransaction
+participant Employee
+
+user -> ChangeClassificationTransaction: change(emp)
+activate ChangeClassificationTransaction
+ChangeClassificationTransaction -> ChangeClassificationTransaction: paymentClassification := GetClassification()
+ChangeClassificationTransaction -> Employee: SetClassification(paymentClassification)
+ChangeClassificationTransaction -> ChangeClassificationTransaction: paymentSchedule := GetSchedule()
+ChangeClassificationTransaction -> Employee: SetSchedule(paymentSchedule)
+deactivate ChangeClassificationTransaction
+@enduml

@@ -5,4 +5,5 @@ services:
     volumes:
       - ./src:/src/src
       - ./uml:/src/uml
+      - ./uml-output:/src/uml-output
       - ./.vscode:/src/.vscode

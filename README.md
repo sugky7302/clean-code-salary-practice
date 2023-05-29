@@ -131,3 +131,13 @@ Payday <date>
 核心模型的 Employee 容許從屬多個工會，但是事務模型無法辨識從屬關係，而且會登記服務費用表示該員工一定隸屬於某個工會，因此我在 Employee 中的 Affiliation 搜尋 UnionAffiliation，並把 ServiceCharge 加進去。
 @import "uml-output/transaction/ServiceChargeTransaction.png"
 @import "uml-output/transaction/ServiceChargeProgress.png"
+
+### 修改員工事務
+使用 TEMPLATE METHOD 來處理所有「更改」操作。透過抽象來統一規格，方便上層呼叫。
+@import "uml-output/transaction/ChangeEmployeeTransaction.png"
+@import "uml-output/transaction/ChangeEmployeeProgress.png"
+
+### 修改員工種類事務
+這裡再次利用 TEMPLATE METHOD 抽象 Classification，統一用一個抽象方法封裝處理，接著再衍生類別實作指定方法。
+@import "uml-output/transaction/ChangeClassificationTransaction.png"
+ChangeHourlyTransation、ChangeSalariedTransaction、ChangeCOmmissionedTransaction 會分別實現 GetClassification 以及 GetSchedule。
