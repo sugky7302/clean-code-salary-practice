@@ -239,3 +239,65 @@ deactivate Employee
 ServiceChargeTransaction -> ServiceCharge: date, amount
 ServiceChargeTransaction -> UnionAffiliation: AddServiceCharge(serviceCharge)
 @enduml
+
+@startuml ChangeEmployeeTransaction
+class ChangeEmployeeTransaction {
+    - empid
+}
+class PayrollDatabase
+class Employee
+class ChangeMethodTransaction
+class ChangeDirectTransaction {
+    - bank
+    - account
+}
+class ChangeHoldTransaction
+class ChangeMailTransaction {
+    - address
+}
+class DirectMethod {
+    - bank
+    - account
+}
+class MailMethod {
+    - address
+}
+
+class ChangeAffiliationTransaction
+interface Affiliation
+class UnionAffiliation {
+    - dues
+}
+
+ChangeEmployeeTransaction -right-> PayrollDatabase
+ChangeEmployeeTransaction -up-> Employee
+ChangeEmployeeTransaction -left-> PaymentMethod
+
+ChangeEmployeeTransaction <|--  ChangeMethodTransaction
+ChangeMethodTransaction <|-- ChangeDirectTransaction
+ChangeDirectTransaction --> DirectMethod: <<create>>
+ChangeMethodTransaction <|-- ChangeHoldTransaction
+ChangeHoldTransaction --> HoldMethod: <<create>>
+ChangeMethodTransaction <|-- ChangeMailTransaction
+ChangeMailTransaction --> MailMethod: <<create>>
+
+ChangeEmployeeTransaction <|--  ChangeAffiliationTransaction
+ChangeAffiliationTransaction -left-> Affiliation
+ChangeAffiliationTransaction <|-- ChangeMemberTransaction
+ChangeMemberTransaction --> UnionAffiliation: <<create>>
+ChangeAffiliationTransaction <|-- ChangeUnaffiliatedTransaction
+@enduml
+
+@startuml ChangeEmployeeProgress
+actor user
+participant ChangeEmployeeTransaction
+participant PayrollDatabase
+
+user -> ChangeEmployeeTransaction: Execute
+activate ChangeEmployeeTransaction
+ChangeEmployeeTransaction -> PayrollDatabase: GetEmployee(empid): Employee
+activate PayrollDatabase
+deactivate PayrollDatabase
+ChangeEmployeeTransaction -> ChangeEmployeeTransaction: Change
+deactivate ChangeEmployeeTransaction
+@enduml
