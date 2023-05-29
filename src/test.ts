@@ -6,13 +6,16 @@ import { SalariedClassification } from "./classification/salaried-classiflicatio
 import { Employee } from "./employee";
 import { HoldMethod } from "./method/hold-method";
 import { PayrollDatabase } from "./payrolldatabase";
+import { BiweeklySchedule } from "./schedule/biweekly-schedule";
 import { MonthlySchedule } from "./schedule/month-schedule";
 import { WeeklySchedule } from "./schedule/weekly-schedule";
 import { AddCommissionedEmployee } from "./transaction/add-commissioned-employee";
 import { AddHourlyEmployee } from "./transaction/add-hourly-employee";
 import { AddSalariedEmployee } from "./transaction/add-salaried-employee";
+import { ChangeCommissionedTransaction } from "./transaction/change-commissioned-transaction";
 import { ChangeHourlyTransaction } from "./transaction/change-hourly-transaction";
 import { ChangeNameTransaction } from "./transaction/change-name-transaction";
+import { ChangeSalariedTransaction } from "./transaction/change-salaried-transaction";
 import { DeleteEmployeeTransaction } from "./transaction/delete-employee";
 import { SalesReceiptTransaction } from "./transaction/sales-receipt-transaction";
 import { ServiceChargeTransaction } from "./transaction/service-charge-transaction";
@@ -27,6 +30,7 @@ export class PayTest {
         this.TestAddServiceCharge();
         this.TestChangeNameTransaction();
         this.TestChangeHourlyTransaction();
+        this.TestChangeSalariedTransaction();
     }
 
     public TestAddSalariedEmployee() {
@@ -158,5 +162,40 @@ export class PayTest {
         Assert.areEqual(27.52, hc.salary);
         const ps = e?.schedule;
         Assert.isTrue(ps instanceof WeeklySchedule);
+    }
+
+    public TestChangeSalariedTransaction() {
+        const empId = 4;
+        const t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        t.execute();
+        const cht = new ChangeSalariedTransaction(empId, 27.52);
+        cht.execute();
+        const e = PayrollDatabase.getEmployee(empId);
+        Assert.isNotNull(e);
+        const pc = e?.classification;
+        Assert.isNotNull(pc);
+        Assert.isTrue(pc instanceof SalariedClassification);
+        const hc = pc as SalariedClassification;
+        Assert.areEqual(27.52, hc.salary);
+        const ps = e?.schedule;
+        Assert.isTrue(ps instanceof MonthlySchedule);
+    }
+
+    public TestChangeCommissionedTransaction() {
+        const empId = 5;
+        const t = new AddCommissionedEmployee(empId, "Lance", "Home", 2500, 3.2);
+        t.execute();
+        const cht = new ChangeCommissionedTransaction(empId, 27.52, 0.1);
+        cht.execute();
+        const e = PayrollDatabase.getEmployee(empId);
+        Assert.isNotNull(e);
+        const pc = e?.classification;
+        Assert.isNotNull(pc);
+        Assert.isTrue(pc instanceof CommissionedClassification);
+        const hc = pc as CommissionedClassification;
+        Assert.areEqual(27.52, hc.salary);
+        Assert.areEqual(0.1, hc.commissionRate);
+        const ps = e?.schedule;
+        Assert.isTrue(ps instanceof BiweeklySchedule);
     }
 }
